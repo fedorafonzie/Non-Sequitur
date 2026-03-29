@@ -2,7 +2,7 @@ name: Generate and Deploy Non Sequitur Feed
 
 on:
   schedule:
-    - cron: '0 8 * * *'
+    - cron: '0 9 * * *'
   workflow_dispatch:
 
 permissions:
@@ -10,24 +10,23 @@ permissions:
   id-token: write
 
 jobs:
-  # Job 1: Genereert het .xml bestand
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository
+      - name: Checkout repository
         uses: actions/checkout@v4
       
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests beautifulsoup4 feedgen
+          pip install requests feedgen
 
-      - name: Run Python script to generate feed
+      - name: Run Python script
         run: python generate_nonsequitur.py
 
       - name: Upload artifact for GitHub Pages
@@ -35,7 +34,6 @@ jobs:
         with:
           path: '.'
 
-  # Job 2: Publiceert het gegenereerde bestand
   deploy:
     needs: build
     permissions:
