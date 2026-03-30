@@ -1,5 +1,8 @@
 name: Generate and Deploy Non Sequitur Feed
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  
 on:
   schedule:
     - cron: '0 9 * * *'
